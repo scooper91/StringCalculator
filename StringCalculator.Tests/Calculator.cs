@@ -5,20 +5,43 @@ namespace StringCalculator.Tests
 {
 	public class Calculator
 	{
-		public IEnumerable<int> StringToNumbers;
-		public int AddNumbers;
+		public IList<char> Delimiters;
+		public int RunningTotal;
 
 		public int Total()
 		{
-			return AddNumbers;
+			return RunningTotal;
 		}
 
-		public void Add(string numbers)
+		public void Add(string data)
 		{
-			StringToNumbers = numbers.Split(',', '\n').Select(int.Parse);
-			foreach (var stringToNumber in StringToNumbers)
+			IList<char> customDelimiter = new List<char>
 			{
-				AddNumbers += stringToNumber;
+				',', '\n'
+			};
+
+			for (var i = 0; i < data.Count(); i += 5)
+			{
+				if (data[i] == '/')
+				{
+					customDelimiter.Add(data[i + 2]);
+					data = data.Remove(0, 4);
+				}
+				else
+				{
+					customDelimiter.Add(',');
+				}
+			}
+
+			var parts = data.Split(
+				customDelimiter[0], 
+				customDelimiter[1], 
+				customDelimiter[2]
+				).Select(int.Parse);
+
+			foreach (var part in parts)
+			{
+				RunningTotal += part;
 			}
 		}
 	}

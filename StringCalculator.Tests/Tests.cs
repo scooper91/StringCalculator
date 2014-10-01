@@ -42,5 +42,14 @@ namespace StringCalculator.Tests
 
 			Assert.That(calculator.Total(), Is.EqualTo(3));
 		}
+
+		[Test]
+		public void Should_Return_Total_When_Custom_Delimiter_Is_Defined()
+		{
+			var calculator = new Calculator();
+			calculator.Add("//;\n1;2");
+
+			Assert.That(calculator.Total(), Is.EqualTo(3));
+		}
 	}
 }
