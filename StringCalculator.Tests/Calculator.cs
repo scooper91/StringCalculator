@@ -15,7 +15,7 @@ namespace StringCalculator.Tests
 
 		public void Add(string numbers)
 		{
-			StringToNumbers = numbers.Split(',').Select(int.Parse);
+			StringToNumbers = numbers.Split(',', '\n').Select(int.Parse);
 			foreach (var stringToNumber in StringToNumbers)
 			{
 				AddNumbers += stringToNumber;

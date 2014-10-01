@@ -33,5 +33,14 @@ namespace StringCalculator.Tests
 
 			Assert.That(calculator.Total(), Is.EqualTo(5));
 		}
+
+		[Test]
+		public void Should_Return_Total_When_New_Lines_Between_Numbers()
+		{
+			var calculator = new Calculator();
+			calculator.Add("1\n2");
+
+			Assert.That(calculator.Total(), Is.EqualTo(3));
+		}
 	}
 }
