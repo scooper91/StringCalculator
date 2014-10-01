@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,14 +7,8 @@ namespace StringCalculator.Tests
 	public class Calculator
 	{
 		public IList<char> Delimiters;
-		public int RunningTotal;
 
-		public int Total()
-		{
-			return RunningTotal;
-		}
-
-		public void Add(string data)
+		public int Add(string data)
 		{
 			IList<char> customDelimiter = new List<char>
 			{
@@ -36,13 +31,18 @@ namespace StringCalculator.Tests
 			var parts = data.Split(
 				customDelimiter[0], 
 				customDelimiter[1], 
-				customDelimiter[2]
-				).Select(int.Parse);
+				customDelimiter[2])
+				.Select(int.Parse);
 
-			foreach (var part in parts)
+			foreach (int part in parts)
 			{
-				RunningTotal += part;
+				if (part < 0)
+				{
+					throw new Exception();
+				}
 			}
+
+			return parts.Sum();
 		}
 	}
 }
