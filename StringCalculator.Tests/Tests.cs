@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace StringCalculator.Tests
 {
@@ -50,6 +51,33 @@ namespace StringCalculator.Tests
 			calculator.Add("//;\n1;2");
 
 			Assert.That(calculator.Total(), Is.EqualTo(3));
+		}
+
+		[Test]
+		public void Should_return_total_when_custom_delimiter_is_defined_2()
+		{
+			var calculator = new Calculator();
+			calculator.Add("//s\n3s4");
+
+			Assert.That(calculator.Total(), Is.EqualTo(7));
+		}
+
+		[Test]
+		public void Should_return_total_when_two_delimiters_are_used()
+		{
+			var calculator = new Calculator();
+			calculator.Add("//s\n3s4,5");
+
+			Assert.That(calculator.Total(), Is.EqualTo(12));
+		}
+
+		[Test]
+		public void Should_throw_exception_if_negative_number_used()
+		{
+			var calculator = new Calculator();
+			calculator.Add("-1,2");
+
+			Assert.That(calculator.Total(), Is.EqualTo(1));
 		}
 	}
 }
