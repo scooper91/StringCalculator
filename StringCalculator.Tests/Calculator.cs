@@ -34,12 +34,9 @@ namespace StringCalculator.Tests
 				customDelimiter[2])
 				.Select(int.Parse);
 
-			foreach (int part in parts)
+			if (parts.Any(part => part < 0))
 			{
-				if (part < 0)
-				{
-					throw new Exception();
-				}
+				throw new Exception("Negatives not allowed");
 			}
 
 			return parts.Sum();

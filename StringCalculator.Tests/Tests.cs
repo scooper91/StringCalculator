@@ -77,7 +77,7 @@ namespace StringCalculator.Tests
 		{
 			var calculator = new Calculator();
 
-			Assert.That(() => calculator.Add("-1, -2"), Throws.TypeOf<Exception>());
+			Assert.That(() => calculator.Add("-2, -1"), Throws.TypeOf<Exception>());
 		}
 	
 		[Test]
@@ -85,7 +85,7 @@ namespace StringCalculator.Tests
 		{
 			var calculator = new Calculator();
 
-			Assert.That(() => calculator.Add("-1, 2"), Throws.TypeOf<Exception>());
+			Assert.That(() => calculator.Add("-1, 2"), Throws.TypeOf<Exception>().With.Message.StringContaining("Negatives not allowed"));
 		}
 	}
 }
