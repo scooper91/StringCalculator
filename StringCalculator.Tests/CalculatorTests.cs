@@ -69,5 +69,22 @@ namespace StringCalculator.Tests
 				Throws.TypeOf<Exception>()
 					.With.Message.StringContaining(errorMessage));
 		}
+
+		[Test]
+		public void Should_ignore_numbers_greater_than_1000()
+		{
+			var calculator = new Calculator();
+
+			Assert.That(calculator.Add("1001,1"), Is.EqualTo(1));
+			Assert.That(calculator.Add("1000,1"), Is.EqualTo(1001));
+		}
+
+		[Test, Ignore]
+		public void Should_be_able_to_use_custom_length_delimiters()
+		{
+			var calculator = new Calculator();
+
+			Assert.That(calculator.Add("//..\n1..1"), Is.EqualTo(2));
+		}
 	}
 }

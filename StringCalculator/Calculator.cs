@@ -21,6 +21,10 @@ namespace StringCalculator
 
 		private void AddAnyCustomDelimiter(string delimitedNumbers)
 		{
+			//if (delimitedNumbers.IndexOf(CustomDelimiterIndicator) != -1)
+			//{
+
+			//}
 			if (delimitedNumbers.StartsWith(CustomDelimiterIndicator))
 			{
 				_delimiters.Add(delimitedNumbers[2]);
@@ -48,7 +52,8 @@ namespace StringCalculator
 
 			return body
 				.Split(_delimiters.ToArray())
-				.Select(int.Parse);
+				.Select(int.Parse)
+				.Where(number => number <= 1000);
 		}
 	}
 }
