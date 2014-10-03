@@ -8,7 +8,7 @@ namespace StringCalculator
 	{
 		private const string CustomDelimiterIndicator = "//";
 
-		private readonly List<char> _delimiters = new List<char> { ',', '\n' };
+		private readonly List<string> _delimiters = new List<string> { ",", "\n" };
 
 		public int Add(string delimitedNumbers)
 		{
@@ -21,13 +21,24 @@ namespace StringCalculator
 
 		private void AddAnyCustomDelimiter(string delimitedNumbers)
 		{
-			//if (delimitedNumbers.IndexOf(CustomDelimiterIndicator) != -1)
+			//foreach (char delimitedValue in delimitedNumbers)
 			//{
-
+			//	if (delimitedValue == '[')
+			//	{
+			//		_delimiters.Add(delimitedNumbers.Substring(delimitedNumbers.IndexOf('[', delimitedValue) + 1,
+			//			(delimitedNumbers.IndexOf(']', delimitedValue) -
+			//				(delimitedNumbers.IndexOf('[', delimitedValue) + 1))));
+			//	}
 			//}
-			if (delimitedNumbers.StartsWith(CustomDelimiterIndicator))
+
+			if (delimitedNumbers.StartsWith(CustomDelimiterIndicator + '['))
 			{
-				_delimiters.Add(delimitedNumbers[2]);
+				var delimiter = delimitedNumbers.Substring(3, delimitedNumbers.IndexOf('\n') - 4);
+				_delimiters.Add(delimiter);
+			}
+			else if (delimitedNumbers.StartsWith(CustomDelimiterIndicator))
+			{
+				_delimiters.Add(delimitedNumbers[2].ToString());
 			}
 		}
 
@@ -46,12 +57,13 @@ namespace StringCalculator
 
 		private IEnumerable<int> SelectNumbersFrom(string delimitedNumbers)
 		{
+			var startIndex = delimitedNumbers.IndexOf('\n') + 1;
 			var body = delimitedNumbers.StartsWith(CustomDelimiterIndicator)
-				? delimitedNumbers.Substring(4)
+				? delimitedNumbers.Substring(startIndex)
 				: delimitedNumbers;
 
 			return body
-				.Split(_delimiters.ToArray())
+				.Split(_delimiters.ToArray(), StringSplitOptions.None)
 				.Select(int.Parse)
 				.Where(number => number <= 1000);
 		}

@@ -70,21 +70,32 @@ namespace StringCalculator.Tests
 					.With.Message.StringContaining(errorMessage));
 		}
 
-		[Test]
-		public void Should_ignore_numbers_greater_than_1000()
+		[TestCase("1000,1", 1001)]
+		[TestCase("1001,1", 1)]
+		[TestCase("30000, 2000, 2", 2)]
+		public void Should_ignore_numbers_greater_than_1000(string numbers, int expectedOutcome)
 		{
 			var calculator = new Calculator();
 
-			Assert.That(calculator.Add("1001,1"), Is.EqualTo(1));
-			Assert.That(calculator.Add("1000,1"), Is.EqualTo(1001));
+			Assert.That(calculator.Add(numbers), Is.EqualTo(expectedOutcome));
+		}
+
+		[TestCase("//[..]\n1..1", 2)]
+		[TestCase("//[...]\n1...1", 2)]
+		[TestCase("//[abcde]\n1abcde2", 3)]
+		public void Should_be_able_to_use_custom_length_delimiters(string numbers, int expectedOutcome)
+		{
+			var calculator = new Calculator();
+			
+			Assert.That(calculator.Add(numbers), Is.EqualTo(expectedOutcome));
 		}
 
 		[Test, Ignore]
-		public void Should_be_able_to_use_custom_length_delimiters()
+		public void Should_be_able_to_use_more_than_1_delimiter()
 		{
 			var calculator = new Calculator();
 
-			Assert.That(calculator.Add("//..\n1..1"), Is.EqualTo(2));
+			Assert.That(calculator.Add("//[-][=]\n1-1=1"), Is.EqualTo(3));
 		}
 	}
 }
