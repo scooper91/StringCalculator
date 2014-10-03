@@ -21,24 +21,18 @@ namespace StringCalculator
 
 		private void AddAnyCustomDelimiter(string delimitedNumbers)
 		{
-			//foreach (char delimitedValue in delimitedNumbers)
-			//{
-			//	if (delimitedValue == '[')
-			//	{
-			//		_delimiters.Add(delimitedNumbers.Substring(delimitedNumbers.IndexOf('[', delimitedValue) + 1,
-			//			(delimitedNumbers.IndexOf(']', delimitedValue) -
-			//				(delimitedNumbers.IndexOf('[', delimitedValue) + 1))));
-			//	}
-			//}
+			if (delimitedNumbers.StartsWith(CustomDelimiterIndicator))
+			{
+				var lineBreakIndex = delimitedNumbers.IndexOf('\n') - 2;
+				var customDelimiters = delimitedNumbers.Substring(2, lineBreakIndex).Split('[');
 
-			if (delimitedNumbers.StartsWith(CustomDelimiterIndicator + '['))
-			{
-				var delimiter = delimitedNumbers.Substring(3, delimitedNumbers.IndexOf('\n') - 4);
-				_delimiters.Add(delimiter);
-			}
-			else if (delimitedNumbers.StartsWith(CustomDelimiterIndicator))
-			{
-				_delimiters.Add(delimitedNumbers[2].ToString());
+				foreach (var delimiter in customDelimiters)
+				{
+					_delimiters.Add(delimiter.Trim(']'));
+				}
+
+				// HACK
+				_delimiters.Remove("");
 			}
 		}
 

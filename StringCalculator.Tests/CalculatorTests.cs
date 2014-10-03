@@ -90,7 +90,7 @@ namespace StringCalculator.Tests
 			Assert.That(calculator.Add(numbers), Is.EqualTo(expectedOutcome));
 		}
 
-		[Test, Ignore]
+		[Test]
 		public void Should_be_able_to_use_more_than_1_delimiter()
 		{
 			var calculator = new Calculator();
