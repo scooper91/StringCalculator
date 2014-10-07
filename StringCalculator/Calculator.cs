@@ -28,7 +28,7 @@ namespace StringCalculator
 
 				foreach (var delimiter in customDelimiters)
 				{
-					_delimiters.Add(delimiter.Trim(']'));
+						_delimiters.Add(delimiter.Trim(']'));
 				}
 
 				// HACK

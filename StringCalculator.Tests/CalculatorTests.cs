@@ -66,8 +66,8 @@ namespace StringCalculator.Tests
 			var calculator = new Calculator();
 
 			Assert.That(() => calculator.Add(negativeNumbers),
-				Throws.TypeOf<Exception>()
-					.With.Message.StringContaining(errorMessage));
+			            Throws.TypeOf<Exception>()
+			                  .With.Message.StringContaining(errorMessage));
 		}
 
 		[TestCase("1000,1", 1001)]
@@ -86,16 +86,18 @@ namespace StringCalculator.Tests
 		public void Should_be_able_to_use_custom_length_delimiters(string numbers, int expectedOutcome)
 		{
 			var calculator = new Calculator();
-			
+
 			Assert.That(calculator.Add(numbers), Is.EqualTo(expectedOutcome));
 		}
 
-		[Test]
-		public void Should_be_able_to_use_more_than_1_delimiter()
+		[TestCase("//[-][=]\n1-1=1", 3)]
+		[TestCase("//[..][=]\n2..1=2", 5)]
+		[TestCase("//[=][..]\n1\n2=3", 6)]
+		public void Should_be_able_to_use_multiple_delimiters(string numbers, int expectedOutcome)
 		{
 			var calculator = new Calculator();
 
-			Assert.That(calculator.Add("//[-][=]\n1-1=1"), Is.EqualTo(3));
+			Assert.That(calculator.Add(numbers), Is.EqualTo(expectedOutcome));
 		}
 	}
 }
